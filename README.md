@@ -1,2 +1,3 @@
-# lan-amento-de-notas
+# lancamento-de-notas
 Formulário par lançamento de notas
+Interação com JS.
