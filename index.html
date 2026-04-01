@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lançamento de Notas</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; color: #002d4b; }
+        h2 { font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; padding: 10px; border-bottom: 2px solid #ccc; }
+        td { padding: 10px; }
+        input { width: 80px; padding: 5px; border: 1px solid #002d4b; border-radius: 4px; }
+        input[readonly] { background-color: #f0f0f0; border: 1px solid #ccc; }
+        .btn-save { background-color: #002d4b; color: white; border: none; padding: 10px 20px; cursor: pointer; }
+        .btn-clear { background-color: #e0e0e0; border: none; padding: 10px 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h2>LANÇAMENTO DE NOTAS</h2>
+
+    <label>Selecione a disciplina</label>
+    <select>
+        <option>Introdução à informática</option>
+        <option>Linguagens de Programação</option>
+        <option>Programação de Computadores</option>
+    </select>
+
+    <form id="formNotas">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome do aluno</th>
+                    <th>Prova 1</th>
+                    <th>Prova 2</th>
+                    <th>Exame</th>
+                    <th>Média</th>
+                    <th>Faltas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="linha-aluno">
+                    <td>Joana da Silva</td>
+                    <td><input type="number" class="p1" min="0" max="10" step="0.1" required></td>
+                    <td><input type="number" class="p2" min="0" max="10" step="0.1" required></td>
+                    <td><input type="number" class="exame" min="0" max="10" step="0.1"></td>
+                    <td><input type="number" class="media" readonly></td>
+                    <td><input type="number" min="0" max="16" required></td>
+                </tr>
+
+                <tr class="linha-aluno">
+                    <td>Maria do Socorro</td>
+                    <td><input type="number" class="p1" min="0" max="10" step="0.1" required></td>
+                    <td><input type="number" class="p2" min="0" max="10" step="0.1" required></td>
+                    <td><input type="number" class="exame" min="0" max="10" step="0.1"></td>
+                    <td><input type="number" class="media" readonly></td>
+                    <td><input type="number" min="0" max="16" required></td>
+                </tr>
+
+                <tr class="linha-aluno">
+                    <td>Pedro Santos</td>
+                    <td><input type="number" class="p1" min="0" max="10" step="0.1" required></td>
+                    <td><input type="number" class="p2" min="0" max="10" step="0.1" required></td>
+                    <td><input type="number" class="exame" min="0" max="10" step="0.1"></td>
+                    <td><input type="number" class="media" readonly></td>
+                    <td><input type="number" min="0" max="16" required></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 20px;">
+            <button type="submit" class="btn-save">Salvar</button>
+            <button type="reset" class="btn-clear">Limpar</button>
+        </div>
+    </form>
+
+    <script>
+        // Esta função "escuta" qualquer digitação no formulário
+        document.getElementById('formNotas').addEventListener('input', function(event) {
+            // Localiza a linha (tr) onde o usuário está digitando
+            const linha = event.target.closest('.linha-aluno');
+            
+            if (linha) {
+                const p1 = parseFloat(linha.querySelector('.p1').value) || 0;
+                const p2 = parseFloat(linha.querySelector('.p2').value) || 0;
+                const exame = parseFloat(linha.querySelector('.exame').value) || 0;
+                const campoMedia = linha.querySelector('.media');
+
+                // Lógica: Média simples das provas. Se houver exame, faz (Média + Exame) / 2
+                let mediaInicial = (p1 + p2) / 2;
+                
+                if (exame > 0) {
+                    let mediaFinal = (mediaInicial + exame) / 2;
+                    campoMedia.value = mediaFinal.toFixed(1);
+                } else {
+                    campoMedia.value = mediaInicial.toFixed(1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
